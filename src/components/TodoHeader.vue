@@ -8,7 +8,7 @@
         name="allChecked"
         class="icon-check"
         :checked="allChecked"
-        @click="allChecked ? allActiveTodo() : allDoneTodo()"
+        @click="clickAllCheck"
       />
       <label v-show="false" for="allChecked">Toggle All Checked</label>
     </div>
@@ -53,6 +53,13 @@ export default {
         this.resetNewTodo();
       }
     },
+    clickAllCheck() {
+      if (this.allChecked) {
+        this.allActiveTodo();
+      } else {
+        this.allDoneTodo();
+      }
+    }
   }
 }
 </script>

@@ -14,7 +14,7 @@
               :name="todo.todoId"
               class="icon-check"
               :checked="todo.done"
-              @click="todo.done ? activeTodo(idx) : doneTodo(idx)"
+              @click="clickTodo(todo, idx)"
             />
             <label :for="todo.todoId">{{ todo.title }}</label>
             <button class="btn-edit" @click="enterEditMode(todo)">&#9998;</button>
@@ -79,6 +79,13 @@ export default {
     },
     cancelEdit() {
       this.exitEditMode();
+    },
+    clickTodo(todo, idx) {
+      if (todo.done) {
+        this.activeTodo(idx)
+      } else {
+        this.doneTodo(idx)
+      }
     },
     current_show(todo) {
       return this.current === 'all' || (this.current === 'done' ? todo.done === true : todo.done === false)
