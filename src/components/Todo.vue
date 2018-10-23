@@ -1,9 +1,9 @@
 <template>
   <div class="wrap">
     <h1>Todo With <span>Vue</span>!</h1>
-    <TodoHeader :addTodo="addTodo" :allChecked="allChecked" :allActiveTodo="allActiveTodo" :allDoneTodo="allDoneTodo" />
-    <TodoBody :todos="todos" :current="current" :removeTodo="removeTodo" :doneTodo="doneTodo" :activeTodo="activeTodo" :saveEditTodo="saveEditTodo" />
-    <TodoFooter :total="total" :all="all" :changeCurrentView="changeCurrentView" :removeDoneList="removeDoneList" />
+    <TodoHeader @addTodo="addTodo" :allChecked="allChecked" @allActiveTodo="allActiveTodo" @allDoneTodo="allDoneTodo" />
+    <TodoBody :todos="todos" :current="current" @removeTodo="removeTodo" @doneTodo="doneTodo" @activeTodo="activeTodo" @saveEditTodo="saveEditTodo" />
+    <TodoFooter :total="total" :all="all" @changeCurrentView="changeCurrentView" @removeDoneList="removeDoneList" />
   </div>
 </template>
 

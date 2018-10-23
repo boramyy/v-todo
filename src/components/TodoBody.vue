@@ -38,7 +38,7 @@
             />
             <button class="btn-save" @click="saveEdit(idx, edit.title)">&#9900;</button>
             <button class="btn-cancel" @click="cancelEdit(todo)">x</button>
-            <button class="btn-remove" @click="removeTodo(todo)">&#9003;</button>
+            <button class="btn-remove" @click="$emit('removeTodo', todo)">&#9003;</button>
           </template>
         </li>
       </template>
@@ -60,10 +60,6 @@ export default {
   props: {
     todos: { type: Array, default: () => [] },
     current: { type: String },
-    removeTodo: { type: Function, default: () => {}},
-    doneTodo: { type: Function, default: () => {}},
-    activeTodo: { type: Function, default: () => {}},
-    saveEditTodo: { type: Function, default: () => {}},
   },
   methods: {
     enterEditMode(todo) {
@@ -74,7 +70,7 @@ export default {
       this.edit.todoId = '';
     },
     saveEdit(idx, title) {
-      this.saveEditTodo(idx, title);
+      this.$emit('saveEditTodo', idx, title);
       this.exitEditMode();
     },
     cancelEdit() {
@@ -82,9 +78,9 @@ export default {
     },
     clickTodo(todo, idx) {
       if (todo.done) {
-        this.activeTodo(idx)
+        this.$emit('activeTodo', idx);
       } else {
-        this.doneTodo(idx)
+        this.$emit('doneTodo', idx);
       }
     },
     current_show(todo) {

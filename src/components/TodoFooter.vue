@@ -22,21 +22,19 @@ export default {
   props: {
     total: { type: Object, default: () => {} },
     all: { type: Number },
-    changeCurrentView: { type: Function, default: () => {} },
-    removeDoneList: { type: Function, default: () => {} },
   },
   methods: {
     changeCurrentViewAll() {
-      this.changeCurrentView('all');
+      this.$emit('changeCurrentView', 'all');
     },
     changeCurrentViewActive() {
-      this.changeCurrentView('active');
+      this.$emit('changeCurrentView', 'active');
     },
     changeCurrentViewDone() {
-      this.changeCurrentView('done');
+      this.$emit('changeCurrentView', 'done');
     },
     removeDone(){
-      this.removeDoneList();
+      this.$emit('removeDoneList');
     }
   },
   computed: {

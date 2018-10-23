@@ -21,9 +21,6 @@
 export default {
   name: 'TodoHeader',
   props: {
-    addTodo: { type: Function, default: () => {} },
-    allActiveTodo: { type: Function, default: () => {} },
-    allDoneTodo: { type: Function, default: () => {} },
     allChecked: { type: Boolean },
   },
   data() {
@@ -49,15 +46,15 @@ export default {
     createNewTodo() {
       if (this.todo.title) {
         this.todo.todoId = this.createNewId();
-        this.addTodo(this.todo);
+        this.$emit('addTodo', this.todo)
         this.resetNewTodo();
       }
     },
     clickAllCheck() {
       if (this.allChecked) {
-        this.allActiveTodo();
+        this.$emit('allActiveTodo');
       } else {
-        this.allDoneTodo();
+        this.$emit('allDoneTodo');
       }
     }
   }
