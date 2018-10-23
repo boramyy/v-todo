@@ -88,7 +88,12 @@ export default {
       }
     },
     current_show(todo) {
-      return this.current === 'all' || (this.current === 'done' ? todo.done === true : todo.done === false)
+      let thisTodoIsShown = false;
+      if  ((this.current === 'done' && todo.done === true)
+        || (this.current === 'active' && todo.done === false)) {
+        thisTodoIsShown = true;
+      }
+      return this.current === 'all' || thisTodoIsShown;
     }
   },
 }

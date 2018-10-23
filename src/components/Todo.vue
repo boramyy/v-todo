@@ -69,7 +69,7 @@ export default {
   methods: {
     addTodo(todo) {
       this.todos = [...this.todos, { ...todo }];
-      this.incTotalActive();
+      this.incrementTotal('active');
     },
     removeTodo(todo) {
       this.todos.filter((item, idx) => {
@@ -77,35 +77,32 @@ export default {
           this.todos.splice(idx, 1);
         }
       });
-      todo.done ? this.decTotalDone() : this.decTotalActive();
+
+      if (todo.done) {
+        this.decrementTotal('done');
+      } else {
+        this.decrementTotal('active');
+      }
     },
     incrementTotal(type) {
       this.total[type] += 1;
     },
     decrementTotal(type) {
-      this.total[type] !== 0 ? this.total[type] -= 1 : 0;
-    },
-    incTotalActive() {
-      this.incrementTotal('active');
-    },
-    incTotalDone() {
-      this.incrementTotal('done');
-    },
-    decTotalActive() {
-      this.decrementTotal('active');
-    },
-    decTotalDone() {
-      this.decrementTotal('done');
+      if (this.total[type] !== 0) {
+        this.total[type] -= 1;
+      } else {
+        this.total[type] = 0;
+      }
     },
     doneTodo(idx) {
       this.todos[idx].done = true;
-      this.decTotalActive();
-      this.incTotalDone();
+      this.incrementTotal('done');
+      this.decrementTotal('active');
     },
     activeTodo(idx) {
       this.todos[idx].done = false;
-      this.incTotalActive();
-      this.decTotalDone();
+      this.incrementTotal('active');
+      this.decrementTotal('done');
     },
     saveEditTodo(idx, title) {
       this.todos[idx].title = title;
