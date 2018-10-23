@@ -13,18 +13,6 @@ import TodoHeader from './TodoHeader.vue'
 import TodoBody from './TodoBody.vue'
 import TodoFooter from './TodoFooter.vue'
 
-const STORAGE_KEY = 'todos-storage';
-const todoStorage = {
-  fetch: function () {
-    const todos = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]')
-    todoStorage.active = filter.countActiveTodo(todos);
-    todoStorage.done = filter.countDoneTodo(todos);
-    return todos
-  },
-  save: function (todos) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(todos))
-  }
-};
 
 const filter = {
   countActiveTodo(todos) {
@@ -58,10 +46,11 @@ export default {
   },
   data() {
     return {
-      todos: todoStorage.fetch(),
+      todoStorage: {},
+      todos: [],
       total: {
-        active: todoStorage.active,
-        done: todoStorage.done,
+        active: 0,
+        done: 0,
       },
       current: 'all',
     }
@@ -136,7 +125,7 @@ export default {
   watch: {
     todos: {
       handler: function (todos) {
-        todoStorage.save(todos)
+        this.todoStorage.save(todos)
       },
       deep: true
     }
@@ -146,8 +135,28 @@ export default {
       return this.total.active + this.total.done;
     },
     allChecked: function() {
-      return this.all && this.all === this.total.done;
+      if (this.all && this.all === this.total.done) {
+        return true;
+      }
+      return false
     }
+  },
+  created: function() {
+    const STORAGE_KEY = 'todos-storage';
+    this.todoStorage = {
+      fetch: function () {
+        const todos = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]')
+        return todos;
+      },
+      save: function (todos) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(todos))
+      }
+    };
+  },
+  mounted: function() {
+    this.todos = this.todoStorage.fetch();
+    this.total.active = filter.countActiveTodo(this.todos);
+    this.total.done = filter.countDoneTodo(this.todos);
   }
 
 }
