@@ -17,7 +17,6 @@ const STORAGE_KEY = 'todos-storage';
 const todoStorage = {
   fetch: function () {
     const todos = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]')
-    todoStorage.all = todos.length;
     todoStorage.active = filter.countActiveTodo(todos);
     todoStorage.done = filter.countDoneTodo(todos);
     return todos
@@ -61,7 +60,6 @@ export default {
     return {
       todos: todoStorage.fetch(),
       total: {
-        // all: todoStorage.all,
         active: todoStorage.active,
         done: todoStorage.done,
       },
@@ -124,7 +122,6 @@ export default {
       })
     },
     allActiveTodo() {
-      this.allChecked = false;
       this.total.active = this.all;
       this.total.done = 0;
       this.todos.forEach(todo => {
@@ -132,7 +129,6 @@ export default {
       })
     },
     allDoneTodo() {
-      this.allChecked = true;
       this.total.done = this.all;
       this.total.active = 0;
       this.todos.forEach(todo => {
@@ -152,13 +148,8 @@ export default {
     all: function() {
       return this.total.active + this.total.done;
     },
-    allChecked: {
-      get: function() {
-        return !!(this.all && this.all === this.total.done);
-      },
-      set: function(){
-        return !!(this.all && this.all === this.total.done);
-      }
+    allChecked: function() {
+      return this.all && this.all === this.total.done;
     }
   }
 
