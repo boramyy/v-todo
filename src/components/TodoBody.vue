@@ -35,6 +35,7 @@
               autofocus
               v-model="edit.title"
               @keyup.enter="saveEdit(idx, edit.title)"
+              @keyup.esc="cancelEdit(todo)"
             />
             <button class="btn-save" @click="saveEdit(idx, edit.title)">&#9900;</button>
             <button class="btn-cancel" @click="cancelEdit(todo)">x</button>
