@@ -4,9 +4,8 @@
     <ul id="todoList">
       <template v-for="(todo, idx) in todos">
         <li
-          :class="todo.done ? 'done' : ''"
           :key="todo.todoId"
-          v-show="current === 'all' || (current === 'done' ? todo.done === true : todo.done === false)"
+          v-show="current_show(todo)"
         >
           <template v-if="edit.todoId !== todo.todoId">
             <input
@@ -81,15 +80,10 @@ export default {
     cancelEdit() {
       this.exitEditMode();
     },
-
-  },
-  directives: {
-    'todo-focus': function (el, binding) {
-      if (binding.value) {
-        el.focus();
-      }
+    current_show(todo) {
+      return this.current === 'all' || (this.current === 'done' ? todo.done === true : todo.done === false)
     }
-  }
+  },
 }
 </script>
 

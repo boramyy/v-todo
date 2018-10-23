@@ -12,7 +12,7 @@
       <dt>Done</dt>
       <dd v-text="total.done"></dd>
     </dl>
-    <button class="btn-remove_done" v-show="total.done > 0" @click="removeDone()">clear done</button>
+    <button class="btn-remove_done" v-show="show_remove_done" @click="removeDone()">clear done</button>
   </div>
 </template>
 
@@ -37,6 +37,11 @@ export default {
     },
     removeDone(){
       this.removeDoneList();
+    }
+  },
+  computed: {
+    show_remove_done: function() {
+      return this.total.done > 0;
     }
   }
 }
